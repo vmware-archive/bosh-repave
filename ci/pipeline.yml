@@ -12,6 +12,8 @@ jobs:
       OPSMAN_USERNAME: {{opsman-username}}
       OPSMAN_PASSWORD: {{opsman-password}}
       DEPLOYMENTS: {{deployments}}
+      REPAVE_SINGLETON_JOBS: {{repave-singleton-jobs}}
+      PERFORM_DRY_RUN_ONLY: {{perform-dry-run-only}}
 
 resources:
 - name: bosh-repave-repo

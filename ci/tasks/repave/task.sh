@@ -14,13 +14,23 @@ for deployment in $(echo $DEPLOYMENTS | sed "s/,/ /g")
 do
   DEPLOYMENT_NAME=$(jq --arg deployment "$deployment" -r '.[] | select( .type | contains($deployment)) | .guid' "deployed_products.json")
 
+  jobIndexToCheck="1"
+  if [ "${REPAVE_SINGLETON_JOBS,,}" == "true" ]; then
+    jobIndexToCheck="0"
+  fi
+
+  dryRunStatement=""
+  if [ "${PERFORM_DRY_RUN_ONLY,,}" == "true" ]; then
+    dryRunStatement="--dry-run"
+  fi
+
   # get list of vms
-  JOBS=$(bosh -d $DEPLOYMENT_NAME --json instances -i | jq -r '.Tables[].Rows[] | select(.index=="1") | .instance | split("/")[0]')
+  JOBS=$(bosh -d $DEPLOYMENT_NAME --json instances -i | jq --arg jobIndexToCheck "$jobIndexToCheck" -r '.Tables[].Rows[] | select(.index==$jobIndexToCheck) | .instance | split("/")[0]')
 
   for job in $JOBS
   do
     echo "Recreating job [$job]"
-    bosh -d $DEPLOYMENT_NAME -n recreate $job
+    bosh -d $DEPLOYMENT_NAME -n $dryRunStatement recreate $job
   done
 
 done
