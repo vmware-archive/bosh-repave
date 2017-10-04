@@ -11,6 +11,8 @@ export BOSH_ENVIRONMENT=bosh
 
 om curl -p /api/v0/deployed/products > deployed_products.json
 
+cat deployed_products.json
+
 # loop through deployments
 echo "Iterating through list of deployments - [$DEPLOYMENTS]"
 for deployment in $(echo $DEPLOYMENTS | sed "s/,/ /g")
@@ -20,7 +22,7 @@ do
   echo $DEPLOYMENT_NAME
 done
 
-
+exit 1 
 
 # parse deployments
 
