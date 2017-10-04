@@ -11,6 +11,7 @@ jobs:
       OPSMAN_URL: {{opsman-url}}
       OPSMAN_USERNAME: {{opsman-username}}
       OPSMAN_PASSWORD: {{opsman-password}}
+      DEPLOYMENTS: {{deployments}}
 
 resources:
 - name: bosh-repave-repo
