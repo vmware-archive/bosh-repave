@@ -15,7 +15,6 @@ bosh deployments
 
   # om-linux curl -p /api/v0/deployed/products > deployed_products.json
 
-
   # run bosh recreate all for the deployment
 
   # ERT_DEPLOYMENT_NAME=$(jq -r '.[] | select( .type | contains("cf")) | .guid' "deployed_products.json")
