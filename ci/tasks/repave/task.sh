@@ -12,10 +12,11 @@ export BOSH_ENVIRONMENT=bosh
 om curl -p /api/v0/deployed/products > deployed_products.json
 
 # loop through deployments
-echo "Iterating through list of deployments"
+echo "Iterating through list of deployments - [$DEPLOYMENTS]"
 for deployment in $(echo $DEPLOYMENTS | sed "s/,/ /g")
 do
-  DEPLOYMENT_NAME=$(jq -r '.[] | select( .type | contains("${deployment}")) | .guid' "deployed_products.json")
+  echo "Processing deployment [${deployment}]"
+  DEPLOYMENT_NAME=$(jq -r '.[] | select( .type | contains("$deployment")) | .guid' "deployed_products.json")
   echo $DEPLOYMENT_NAME
 done
 
