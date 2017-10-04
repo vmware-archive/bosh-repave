@@ -21,7 +21,7 @@ jobs:
     ensure:
       put: lock
       params:
-      - release: lock
+        release: lock
 
 resources:
 - name: bosh-repave-repo
