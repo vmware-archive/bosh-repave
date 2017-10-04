@@ -16,5 +16,5 @@ resources:
 - name: bosh-repave-repo
   type: git
   source:
-    uri: https://github.com/pivotal-cf/bbr-pcf-pipeline-tasks.git
+    uri: https://github.com/pivotalservices/bosh-repave.git
     branch: master
