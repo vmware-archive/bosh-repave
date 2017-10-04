@@ -2,6 +2,8 @@ jobs:
 - name: repave
   serial: true
   plan:
+  - put: lock
+    params: {acquire: true}
   - get: bosh-repave-repo
     trigger: false
   - get: scheduler
@@ -16,6 +18,10 @@ jobs:
       DEPLOYMENTS: {{deployments}}
       REPAVE_SINGLETON_JOBS: {{repave-singleton-jobs}}
       PERFORM_DRY_RUN_ONLY: {{perform-dry-run-only}}
+    ensure:
+      put: lock
+      params:
+      - release: lock
 
 resources:
 - name: bosh-repave-repo
@@ -29,4 +35,10 @@ resources:
     start: {{scheduler-time-window-start}}
     stop: {{scheduler-time-window-stop}}
     location: {{scheduler-time-location}}
-    days: [{{scheduler-days-to-run}}]
+- name: lock
+  type: pool
+  source:
+    uri: {{lock-git-repo-uri}}
+    branch: {{lock-git-repo-branch}}
+    pool: {{lock-pool-name}}
+    private_key: {{lock-git-private-key}}
