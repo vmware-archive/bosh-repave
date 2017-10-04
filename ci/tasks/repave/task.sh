@@ -20,7 +20,7 @@ do
   # echo "Found [$DEPLOYMENT_NAME]"
 
   # get list of vms
-  bosh -d $DEPLOYMENT_NAME --json instances
+  bosh -d $DEPLOYMENT_NAME --json instances -i | jq -r '.Tables[].Rows[] | select(.index=="1") | .instance'
 
 
 done
