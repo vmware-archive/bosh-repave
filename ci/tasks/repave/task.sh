@@ -1,4 +1,4 @@
-#!/bin/bash -eu
+#!/bin/bash -eux
 
 # om-linux --request-timeout 7200 export-installation --output-file om-installation/installation.zip
 
