@@ -4,6 +4,8 @@ jobs:
   plan:
   - get: bosh-repave-repo
     trigger: false
+  - get: scheduler
+    trigger: true
   - task: repave
     file: bosh-repave-repo/ci/tasks/repave/task.yml
     params:
@@ -21,3 +23,10 @@ resources:
   source:
     uri: https://github.com/pivotalservices/bosh-repave.git
     branch: master
+- name: scheduler
+  type: time
+  source:
+    start: {{scheduler-time-window-start}}
+    stop: {{scheduler-time-window-stop}}
+    location: {{scheduler-time-location}}
+    days: [{{scheduler-days-to-run}}]
