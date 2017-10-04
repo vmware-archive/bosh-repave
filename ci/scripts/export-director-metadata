@@ -1,0 +1,18 @@
+#!/bin/bash -eu
+
+om-linux curl -p /api/v0/deployed/director/manifest > director_manifest.json
+
+BOSH_CLIENT="ops_manager"
+BOSH_CLIENT_SECRET=$(jq -r '.jobs[] | select(.name == "bosh") | .properties.uaa.clients.ops_manager.secret' director_manifest.json)
+BOSH_ADDRESS=$(jq -r '.jobs[] | select(.name == "bosh") | .properties.director.address' director_manifest.json)
+
+BOSH_CA_CERT_PATH="${PWD}/bosh.crt"
+jq -r '.jobs[] | select(.name == "bosh") | .properties.director.config_server.ca_cert' director_manifest.json > "${BOSH_CA_CERT_PATH}"
+
+# Get CF deployment guid
+om-linux curl -p /api/v0/deployed/products > deployed_products.json
+
+export BOSH_CLIENT
+export BOSH_CLIENT_SECRET
+export BOSH_CA_CERT_PATH
+export BOSH_ADDRESS

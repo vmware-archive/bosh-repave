@@ -1,0 +1,20 @@
+jobs:
+- name: repave
+  serial: true
+  plan:
+  - get: bosh-repave-repo
+    trigger: false
+  - task: repave
+    file: bosh-repave-repo/ci/tasks/repave/task.yml
+    params:
+      SKIP_SSL_VALIDATION: {{skip-ssl-validation}}
+      OPSMAN_URL: {{opsman-url}}
+      OPSMAN_USERNAME: {{opsman-username}}
+      OPSMAN_PASSWORD: {{opsman-password}}
+
+resources:
+- name: bosh-repave-repo
+  type: git
+  source:
+    uri: https://github.com/pivotal-cf/bbr-pcf-pipeline-tasks.git
+    branch: master
