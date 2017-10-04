@@ -20,11 +20,12 @@ do
   # echo "Found [$DEPLOYMENT_NAME]"
 
   # get list of vms
-  bosh -d $DEPLOYMENT_NAME --json vms
+  bosh -d $DEPLOYMENT_NAME --json instances
 
 
 done
 
+exit 1
 # iterate through white-listed deployments
 
 
