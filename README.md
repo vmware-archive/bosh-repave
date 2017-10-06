@@ -13,9 +13,9 @@ The scripts iterate through the list of selected deployments provided as a pipel
 
 - The purpose of the pipeline is to provide a mechanism to selectively repave VMs of selected deployments on a regular basis, for organizations that require such procedure for any reason such as internal security regulations.  
 
-- Using and running this pipeline should be done with proper caution and planning, as the recreation of VMs that implement singleton jobs may cause outages to the platform. The pipeline provides a flag to skip VMs of singleton jobs.   
+- The use and the execution of this pipeline should be done with proper caution and planning, as the recreation of VMs that implement singleton jobs may cause outages to the platform. The pipeline provides a flag to skip VMs of singleton jobs.   
 
-- This pipeline should be scheduled to run in a time-window that does not coincide with other procedures that may also affect the platform availability or performance, such as backups, updates or upgrades. A scheduler (time resource) is provided by default in the pipeline implementation.  
+- This pipeline should be scheduled to run in a time-window that does not coincide with other procedures that may also affect the platform's availability or performance, such as backups, updates or upgrades. A scheduler (time resource) is provided by default in the pipeline implementation.  
 
 - In addition to the scheduler resource, a "deployments lock" mechanism is implemented by the pipeline. Such mechanism should also be used in other pipelines such as the ones for backups and upgrades, so their execution will not collide with the repaving of VMs.  
 
