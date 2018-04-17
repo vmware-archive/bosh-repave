@@ -25,7 +25,12 @@ do
   fi
 
   # get list of vms
-  JOBS=$(bosh -d $DEPLOYMENT_NAME --json instances -i | jq --arg jobIndexToCheck "$jobIndexToCheck" -r '.Tables[].Rows[] | select(.index==$jobIndexToCheck) | .instance | split("/")[0]')
+  if [ -z "$JOBS" ]
+  then
+    JOBS=$(bosh -d $DEPLOYMENT_NAME --json instances -i | jq --arg jobIndexToCheck "$jobIndexToCheck" -r '.Tables[].Rows[] | select(.index==$jobIndexToCheck) | .instance | split("/")[0]')
+  else
+    JOBS=$(echo $JOBS | sed "s/,/ /g")
+  fi
 
   for job in $JOBS
   do
